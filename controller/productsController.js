@@ -15,8 +15,11 @@ export async function updateProduct(req, res) {
   console.log(req.body)
   const id = req.body.id
   delete req.body.id
+
   console.log(req.body)
   const product = req.body
+  product.price = Number(product.price)
+  product.stock = Number(product.stock)
 
   const db = await getDb()
   const response = await db

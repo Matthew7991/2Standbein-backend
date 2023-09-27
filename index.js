@@ -3,7 +3,11 @@ import express from "express"
 import cors from "cors"
 import morgan from "morgan"
 import multer from "multer"
-import { addOrder, getOrders } from "./controller/ordersController.js"
+import {
+  addOrder,
+  getOrders,
+  updateOrder,
+} from "./controller/ordersController.js"
 import {
   addProduct,
   getProducts,
@@ -29,6 +33,7 @@ server.post("/api/products", auth, addProduct)
 server.get("/api/admin/auth", auth, checkToken)
 
 server.get("/api/orders", auth, getOrders)
+server.patch("/api/orders/:id", auth, updateOrder)
 server.post("/api/orders", addOrder)
 
 server.post("/api/login", encypt, login)
