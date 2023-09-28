@@ -16,6 +16,6 @@ export async function login(req, res) {
   }
 }
 
-export function checkToken(req, res) {
+export function checkToken(_, res) {
   res.end()
 }
