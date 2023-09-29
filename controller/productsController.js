@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb"
 import { getDb } from "../utilities/db.js"
-import { uploadImage } from "../utilities/imageService.js"
+import { deleteImage, uploadImage } from "../utilities/imageService.js"
 
 const col = "products"
 
@@ -48,6 +48,7 @@ export async function addProduct(req, res) {
     product.price = Number(product.price)
     product.stock = Number(product.stock)
     product.imgUrl = result.secure_url
+    product.publicId = result.public_id
 
     const db = await getDb()
     const response = await db.collection(col).insertOne(product)
@@ -55,4 +56,23 @@ export async function addProduct(req, res) {
     console.log(error)
   }
   res.json()
+}
+
+export async function deleteProduct(req, res) {
+  try {
+    const id = new ObjectId(req.params.id)
+    const db = await getDb()
+
+    const response = await db.collection(col).find({ _id: id })
+    const publicId = response.publicId
+
+    if (publicId) await deleteImage(publicId)
+
+    const result = await db.collection(col).deleteOne({ _id: id })
+  } catch (error) {
+    console.log(error)
+    res.status(500).end()
+  }
+
+  res.end()
 }

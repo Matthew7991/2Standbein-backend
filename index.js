@@ -10,6 +10,7 @@ import {
 } from "./controller/ordersController.js"
 import {
   addProduct,
+  deleteProduct,
   getProducts,
   updateProduct,
 } from "./controller/productsController.js"
@@ -27,6 +28,7 @@ server.use(morgan("dev"))
 // server.use(upload.none())
 
 server.get("/api/products", getProducts)
+server.delete("/api/products/:id", deleteProduct)
 server.put("/api/products", auth, upload.single("image"), updateProduct)
 server.post("/api/products", auth, upload.single("image"), addProduct)
 

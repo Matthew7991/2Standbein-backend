@@ -10,3 +10,7 @@ export function uploadImage(buffer) {
       .end(buffer)
   })
 }
+
+export function deleteImage(publicId) {
+  return cloudinary.uploader.destroy(publicId)
+}
